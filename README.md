@@ -134,23 +134,26 @@ pre() // return < pre > tag
 </pre>
 <b>Handle requests</b>
 <pre>
-<i>get(string $param, bool $escape = true)</i>
+get(string $param, bool $escape = true)
 </pre>
+<br><br>
 return a get request ex:
 get("id", false)
 it will return the value of id
 set it to true for esaping html tags
 <br>
+<br>
 <pre>
-<i>post(string $param, bool $escape = true)</i>
+post(string $param, bool $escape = true)
 </pre>
 return a post request ex:
 post("id", false)
 it will return the value of id
 set it to true for esaping html tags
 <br>
+<br>
 <pre>
-<i>all_request(bool $escape = true)</i>
+all_request(bool $escape = true)
 </pre>
 return an array of all requests ex:
 all_request(false)
