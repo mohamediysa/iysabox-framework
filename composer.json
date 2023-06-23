@@ -1,0 +1,12 @@
+{
+    "name": "iysa/iysabox",
+    "description": "php framework",
+    "type": "project",
+    "authors": [
+        {
+            "name": "iysa",
+            "email": "iysa@iysabox.com"
+        }
+    ],
+    "require": {}
+}
