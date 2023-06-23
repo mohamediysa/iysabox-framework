@@ -136,7 +136,6 @@ pre() // return < pre > tag
 <pre>
 get(string $param, bool $escape = true)
 </pre>
-<br><br>
 return a get request ex:
 get("id", false)
 it will return the value of id
