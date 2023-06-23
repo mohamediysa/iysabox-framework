@@ -8,11 +8,10 @@
 </head>
 
 <body>
-    <h1>page with data</h1>
-    <?php
-    echo "email:" . $email . "<br>";
-    echo "age:" . $age . "<br>";
-    ?>
+    <h1>Html page with data</h1>
+    <?= "Email : " . $email ?>
+    <br>
+    <?= "Age : " . $age ?>
 </body>
 
 </html>

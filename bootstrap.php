@@ -1,6 +1,6 @@
 <?php
-require __DIR__ . "/helpers.php";
 require __DIR__ . "/vendor/autoload.php";
+require __DIR__ . "/helpers.php";
 
 $paths = [];
 
@@ -32,14 +32,14 @@ function run()
         preg_match_all('/{([^}]*)}/', $path, $matches);
         if (!empty($matches[1])) {
             foreach ($matches[1] as $value) {
-                if ($value[0] == "/" && $value[-1] == "/") {
+                if (string_between($value, "/", "/")) {
                     $i = array_search($value, $matches[1]);
                     if (preg_match($value, $values[$i])) {
                         $keyVal[$paramNames[$i]] = $values[$i];
                     } else {
                         error404();
                     }
-                } else if ($value[0] == ":") {
+                } else if (string_starts_with($value, ":")) {
                     $i = array_search($value, $matches[1]);
                     if ($value == ":num" && is_numeric($values[$i])) {
                         $keyVal[$paramNames[$i]] = $values[$i];
@@ -57,9 +57,9 @@ function run()
             }
         }
         foreach ($keyVal as $key => $value) {
-            if($value){
+            if ($value) {
                 call_user_func_array($paths[$path], $keyVal);
-            }else{
+            } else {
                 error404();
             }
         }
@@ -100,4 +100,57 @@ function extractParameter($pattern)
         return $parameter;
     }
     return null;
+}
+
+if (!function_exists('string_between')) {
+    /**
+     * @param string $haystack
+     * @param string $delimiter1
+     * @param string $delimiter2
+     * @return bool|string
+     */
+    function string_between($haystack, $delimiter1, $delimiter2)
+    {
+        if (!empty($haystack) && !empty($delimiter1) && !empty($delimiter2)) {
+            if (strpos($haystack, $delimiter1) !== false && strpos($haystack, $delimiter2) !== false) {
+                // separate $haystack in two strings and put each string in an array
+                $pre_filter = explode($delimiter1, $haystack);
+                if (isset($pre_filter[1])) {
+                    // remove everything after the $delimiter2 in the second line of the
+                    // $pre_filter[] array
+                    $post_filter = explode($delimiter2, $pre_filter[1]);
+                    if (isset($post_filter[0])) {
+                        // return the string between $delimiter1 and $delimiter2
+                        return $post_filter[0];
+                    }
+                    return false;
+                }
+                return false;
+            }
+            return false;
+        }
+
+        return false;
+    }
+}
+
+
+if (!function_exists('string_starts_with')) {
+    /**
+     * Determine if a given string starts with a given substring.
+     *
+     * @param  string $haystack
+     * @param  string|array $needles
+     * @return bool
+     */
+    function string_starts_with($haystack, $needles)
+    {
+        foreach ((array) $needles as $needle) {
+            if ($needle != '' && mb_strpos($haystack, $needle) === 0) {
+                return true;
+            }
+        }
+
+        return false;
+    }
 }

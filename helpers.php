@@ -1,7 +1,5 @@
 <?php
 
-
-
 function json(array $data, int $status_code = 200): void
 {
 
@@ -43,15 +41,13 @@ function error404()
     exit;
 }
 
-function display_errors(bool $show = true)
+function errors(bool $display = true)
 {
-    if ($show) {
+    if ($display) {
         ini_set('display_errors', 1);
-        ini_set('display_startup_errors', 1);
         error_reporting(E_ALL);
     } else {
         ini_set('display_errors', 0);
-        ini_set('display_startup_errors', 0);
         error_reporting(0);
     }
 }
@@ -188,37 +184,7 @@ if (!function_exists('string_after')) {
     }
 }
 
-if (!function_exists('string_between')) {
-    /**
-     * @param string $haystack
-     * @param string $delimiter1
-     * @param string $delimiter2
-     * @return bool|string
-     */
-    function string_between($haystack, $delimiter1, $delimiter2)
-    {
-        if (!empty($haystack) && !empty($delimiter1) && !empty($delimiter2)) {
-            if (strpos($haystack, $delimiter1) !== false && strpos($haystack, $delimiter2) !== false) {
-                // separate $haystack in two strings and put each string in an array
-                $pre_filter = explode($delimiter1, $haystack);
-                if (isset($pre_filter[1])) {
-                    // remove everything after the $delimiter2 in the second line of the
-                    // $pre_filter[] array
-                    $post_filter = explode($delimiter2, $pre_filter[1]);
-                    if (isset($post_filter[0])) {
-                        // return the string between $delimiter1 and $delimiter2
-                        return $post_filter[0];
-                    }
-                    return false;
-                }
-                return false;
-            }
-            return false;
-        }
 
-        return false;
-    }
-}
 
 /**
  * All the functions below are from Illumintate/support package,
@@ -227,25 +193,6 @@ if (!function_exists('string_between')) {
  * @see https://github.com/laravel/framework/blob/master/LICENSE.txt
  */
 
-if (!function_exists('string_starts_with')) {
-    /**
-     * Determine if a given string starts with a given substring.
-     *
-     * @param  string $haystack
-     * @param  string|array $needles
-     * @return bool
-     */
-    function string_starts_with($haystack, $needles)
-    {
-        foreach ((array) $needles as $needle) {
-            if ($needle != '' && mb_strpos($haystack, $needle) === 0) {
-                return true;
-            }
-        }
-
-        return false;
-    }
-}
 
 if (!function_exists('string_ends_with')) {
     /**
