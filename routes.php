@@ -107,6 +107,7 @@ route("page/{/^[a-zA-Z]+$/}/user/{/^[0-9]+$/}", function ($id, $id2) {
     ];
     json($data);
 });
+
 route("test/{/^[a-zA-Z]+$/}/user/{:alpha}", function ($id, $id2) {
     $data = [
         "parametre 1" => $id,
