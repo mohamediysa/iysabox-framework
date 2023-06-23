@@ -99,7 +99,7 @@ route("page/{/^[a-zA-Z]+$/}/user/{/^[0-9]+$/}", function ($p1, $p2) {
 });
 </pre>
 <pre>
-route("test/{/^[a-zA-Z]+$/}/user/{:alpha}", function ($id, $id2) {
+route("page/{/^[a-zA-Z]+$/}/user/{:alpha}", function ($id, $id2) {
     $data = [
         "parametre 1" => $id,
         "parametre 2" => $id2
@@ -107,3 +107,54 @@ route("test/{/^[a-zA-Z]+$/}/user/{:alpha}", function ($id, $id2) {
     json($data);
 });
 </pre>
+
+<h3>Helper functions : </h3>
+<pre>
+view(string $page_path, array $data = [])
+the view function use to view an html page
+note : all html should go in html directory
+you can pass an array of data as a second param
+ex:
+$data = [
+    "name" => "iysa"
+];
+view("page",$data)
+in the html/page.php you can use the $name variable to get its value
+</pre>
+<pre>
+json(array $data, int $status_code = 200) // echo array as json
+</pre>
+<pre>
+error404() // echo a json 404 error with 404 header
+</pre>
+<pre>
+br() // return < br > tag 
+pre() // return < pre > tag 
+</pre>
+<pre>
+<b>Handle requests</b>
+<i>get(string $param, bool $escape = true)</i>
+return a get request ex:
+get("id", false)
+it will return the value of id
+set it to true for esaping html tags
+
+<i>post(string $param, bool $escape = true)</i>
+return a post request ex:
+post("id", false)
+it will return the value of id
+set it to true for esaping html tags
+
+<i>all_request(bool $escape = true)</i>
+return an array of all requests ex:
+all_request(false)
+set it to true for esaping html tags
+</pre>
+<pre></pre>
+<pre></pre>
+<pre></pre>
+<pre></pre>
+<pre></pre>
+<pre></pre>
+<pre></pre>
+<pre></pre>
