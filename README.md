@@ -112,14 +112,14 @@ route("page/{/^[a-zA-Z]+$/}/user/{:alpha}", function ($id, $id2) {
 <pre>
 view(string $page_path, array $data = [])
 </pre>
-the view function use to view an html page
-note : all html should go in html directory
-you can pass an array of data as a second param
-ex:
+the view function use to view an html page<br>
+note : all html should go in html directory<br>
+you can pass an array of data as a second param<br>
+ex:<br>
 $data = [
     "name" => "iysa"
 ];
-view("page",$data)
+view("page",$data)<br>
 in the html/page.php you can use the $name variable to get its value
 <br>
 <pre>
@@ -136,24 +136,24 @@ pre() // return < pre > tag
 <pre>
 get(string $param, bool $escape = true)
 </pre>
-return a get request ex:
-get("id", false)
-it will return the value of id
-set it to true for esaping html tags
+return a get request ex:<br>
+get("id", false)<br>
+it will return the value of id<br>
+set it to true for esaping html tags<br>
 <br>
 <br>
 <pre>
 post(string $param, bool $escape = true)
 </pre>
-return a post request ex:
-post("id", false)
-it will return the value of id
-set it to true for esaping html tags
+return a post request ex:<br>
+post("id", false)<br>
+it will return the value of id<br>
+set it to true for esaping html tags<br>
 <br>
 <br>
 <pre>
 all_request(bool $escape = true)
 </pre>
-return an array of all requests ex:
-all_request(false)
-set it to true for esaping html tags
+return an array of all requests ex:<br>
+all_request(false)<br>
+set it to true for esaping html tags<br>
