@@ -40,6 +40,7 @@ function getHttpStatusHeader(int $statusCode): string
 function error404()
 {
     json(["message" => "404 Page not found"], 404);
+    exit;
 }
 
 function display_errors(bool $show = true)

@@ -56,7 +56,13 @@ function run()
                 }
             }
         }
-        call_user_func_array($paths[$path], $keyVal);
+        foreach ($keyVal as $key => $value) {
+            if($value){
+                call_user_func_array($paths[$path], $keyVal);
+            }else{
+                error404();
+            }
+        }
     } else {
         error404();
     }
