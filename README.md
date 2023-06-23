@@ -118,7 +118,7 @@ you can pass an array of data as a second param<br>
 ex:<br>
 $data = [
     "name" => "iysa"
-];
+];<br>
 view("page",$data)<br>
 in the html/page.php you can use the $name variable to get its value
 <br>
