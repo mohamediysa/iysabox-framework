@@ -1,5 +1,6 @@
 # iysabox-framework
-a simple and lightweight php router/framework for building apis and small webpages<br>
+a micro and lightweight php framework for building apis faster
+<br>
 <pre>1. clone the files into your dir
     git clone https://github.com/mohamediysa/iysabox-framework.git</pre>
 <br>
