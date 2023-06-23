@@ -111,6 +111,7 @@ route("page/{/^[a-zA-Z]+$/}/user/{:alpha}", function ($id, $id2) {
 <h3>Helper functions : </h3>
 <pre>
 view(string $page_path, array $data = [])
+</pre>
 the view function use to view an html page
 note : all html should go in html directory
 you can pass an array of data as a second param
@@ -120,7 +121,7 @@ $data = [
 ];
 view("page",$data)
 in the html/page.php you can use the $name variable to get its value
-</pre>
+<br>
 <pre>
 json(array $data, int $status_code = 200) // echo array as json
 </pre>
@@ -131,30 +132,24 @@ error404() // echo a json 404 error with 404 header
 br() // return < br > tag 
 pre() // return < pre > tag 
 </pre>
-<pre>
 <b>Handle requests</b>
+<pre>
 <i>get(string $param, bool $escape = true)</i>
 return a get request ex:
 get("id", false)
 it will return the value of id
-set it to true for esaping html tags
-
+set it to true for esaping html tags</pre>
+<br>
+<pre>
 <i>post(string $param, bool $escape = true)</i>
 return a post request ex:
 post("id", false)
 it will return the value of id
-set it to true for esaping html tags
-
+set it to true for esaping html tags</pre>
+<br>
+<pre>
 <i>all_request(bool $escape = true)</i>
 return an array of all requests ex:
 all_request(false)
 set it to true for esaping html tags
 </pre>
-<pre></pre>
-<pre></pre>
-<pre></pre>
-<pre></pre>
-<pre></pre>
-<pre></pre>
-<pre></pre>
-<pre></pre>
