@@ -16,10 +16,8 @@ route("/", function () {
     ]);
 });
 
-route("page", function () {
-    $data = [
-        "email" => "example@gmail.com",
-        "age" => 23
-    ];
-    view("page", $data); // html/page.php
+route("/api/{:num}", function($id){
+    json([
+        "id" => $id
+    ]);
 });
