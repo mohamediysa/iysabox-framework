@@ -4,7 +4,7 @@ require __DIR__ . "/vendor/autoload.php";
 
 $paths = [];
 
-require __DIR__ . "/routes.php";
+require __DIR__ . "/app/routes.php";
 
 function route(string $path, callable $a)
 {
@@ -194,40 +194,14 @@ function json(array $data, int $status_code = 200): void
     exit;
 }
 
-function getHttpStatusHeader(int $statusCode): string
+function view(string $page_path, array $data = [])
 {
-    $statusHeader = '';
-    switch ($statusCode) {
-        case 200:
-            $statusHeader = 'HTTP/1.1 200 OK';
-            break;
-        case 400:
-            $statusHeader = 'HTTP/1.1 400 Bad Request';
-            break;
-        case 404:
-            $statusHeader = 'HTTP/1.1 404 Not Found';
-            break;
-        case 500:
-            $statusHeader = 'HTTP/1.1 500 Internal Server Error';
-            break;
-        default:
-            $statusHeader = 'HTTP/1.1 ' . $statusCode;
-            break;
+    foreach ($data as $key => $value) {
+        $$key = $value;
     }
-
-    return $statusHeader;
+    require __DIR__ . "/app/html/" . $page_path . ".php";
 }
 
-
-function br(): string
-{
-    return "<br>";
-}
-
-function pre(): string
-{
-    return "<pre>";
-}
 
 function get(string $param, bool $escape = true)
 {
@@ -264,12 +238,39 @@ function all_request(bool $escape = true): array
     return $req;
 }
 
-function view(string $page_path, array $data = [])
+function br(): string
 {
-    foreach ($data as $key => $value) {
-        $$key = $value;
+    return "<br>";
+}
+
+function pre(): string
+{
+    return "<pre>";
+}
+
+
+function getHttpStatusHeader(int $statusCode): string
+{
+    $statusHeader = '';
+    switch ($statusCode) {
+        case 200:
+            $statusHeader = 'HTTP/1.1 200 OK';
+            break;
+        case 400:
+            $statusHeader = 'HTTP/1.1 400 Bad Request';
+            break;
+        case 404:
+            $statusHeader = 'HTTP/1.1 404 Not Found';
+            break;
+        case 500:
+            $statusHeader = 'HTTP/1.1 500 Internal Server Error';
+            break;
+        default:
+            $statusHeader = 'HTTP/1.1 ' . $statusCode;
+            break;
     }
-    require __DIR__ . "/html/" . $page_path . ".php";
+
+    return $statusHeader;
 }
 
 //credit to https://github.com/hedii/helpers
