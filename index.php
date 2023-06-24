@@ -119,19 +119,16 @@ function extractParameter($pattern)
 
 function checkEqualValues($array1, $array2)
 {
-    // Check if arrays have the same length
     if (count($array1) !== count($array2)) {
         return false;
     }
-    // Iterate over the arrays and compare values at each index
     for ($i = 0; $i < count($array1); $i++) {
         if ($array1[$i] !== $array2[$i]) {
-            return false; // Values at index $i are not equal
+            return false;
         }
     }
-    return true; // All values are equal
+    return true;
 }
-
 
 
 
@@ -140,7 +137,6 @@ function checkEqualValues($array1, $array2)
 //      HELPER FUNCTIONS      //
 //                            //
 ################################
-
 
 function string_between($haystack, $delimiter1, $delimiter2)
 {
@@ -166,8 +162,6 @@ function string_between($haystack, $delimiter1, $delimiter2)
     return false;
 }
 
-
-
 function string_starts_with($haystack, $needles)
 {
     foreach ((array) $needles as $needle) {
@@ -177,20 +171,6 @@ function string_starts_with($haystack, $needles)
     }
 
     return false;
-}
-
-
-function errors(bool $display = true)
-{
-    if ($display) {
-        ini_set('display_errors', 1);
-        ini_set('display_startup_errors', 1);
-        error_reporting(E_ALL);
-    } else {
-        ini_set('display_errors', 0);
-        ini_set('display_startup_errors', 0);
-        error_reporting(0);
-    }
 }
 
 function error404()
