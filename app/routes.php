@@ -30,6 +30,12 @@ route("user_name/{:alpha}/user_id/{:num}", function($name, $id){
     ]);
 });
 
+route("page_num/{id}", function ($id){
+    json([
+        "id" => $id
+    ]);
+});
+
 route("page", function (){
     $data = [
         "email" => "example@gmail.com",
