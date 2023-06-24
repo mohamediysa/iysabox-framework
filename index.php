@@ -24,57 +24,69 @@ function run()
         call_user_func($paths[$uri]);
     } else if (pathWithParam($uri_param_regex) && array_key_exists(1, $uri_arr)) {
         $path =  pathWithParam($uri_param_regex);
-        $reflectionFunc = new ReflectionFunction($paths[$path]);
-        $parameters = $reflectionFunc->getParameters();
-        $paramNames = [];
-        foreach ($parameters as $param) {
-            $paramNames[] = $param->getName();
-        }
-        $keyVal = [];
-        $values = [];
-        for ($i = 0; $i < count($uri_arr); $i++) {
-            if ($i % 2 == 1) {
-                $values[$i] = $uri_arr[$i];
+        $pattern = '/\/\{[^}]+\}/';
+        $result = preg_replace($pattern, '', $path);
+        $check_path = explode("/", $result);
+        $check_uri = array();
+        foreach ($uri_arr as $index => $value) {
+            if ($index % 2 == 0) {
+                $check_uri[] = $value;
             }
         }
-        $values = array_values($values);
+        if (checkEqualValues($check_uri, $check_path)) {
 
-        preg_match_all('/{([^}]*)}/', $path, $matches);
-        if (!empty($matches[1])) {
-            foreach ($matches[1] as $value) {
-                if (string_between($value, "/", "/")) {
-                    $i = array_search($value, $matches[1]);
-                    if (preg_match($value, $values[$i])) {
-                        $keyVal[$paramNames[$i]] = $values[$i];
-                    } else {
-                        error404();
-                    }
-                } else if (string_starts_with($value, ":")) {
-                    $i = array_search($value, $matches[1]);
-                    if ($value == ":num" && is_numeric($values[$i])) {
-                        $keyVal[$paramNames[$i]] = $values[$i];
-                    } else if ($value == ":alpha" && !is_numeric($values[$i])) {
-                        $keyVal[$paramNames[$i]] = $values[$i];
-                    } else if ($value == ":alpha_num" && preg_match('/^[a-zA-Z0-9]+$/', $values[$i])) {
-                        $keyVal[$paramNames[$i]] = $values[$i];
-                    } else {
-                        error404();
-                    }
-                } else {
-                    $i = array_search($value, $matches[1]);
-                    $keyVal[$paramNames[$i]] = $values[$i];
+            $reflectionFunc = new ReflectionFunction($paths[$path]);
+            $parameters = $reflectionFunc->getParameters();
+            $paramNames = [];
+            foreach ($parameters as $param) {
+                $paramNames[] = $param->getName();
+            }
+            $keyVal = [];
+            $values = [];
+            for ($i = 0; $i < count($uri_arr); $i++) {
+                if ($i % 2 == 1) {
+                    $values[$i] = $uri_arr[$i];
                 }
             }
-        }
-        foreach ($keyVal as $key => $value) {
-            if ($value) {
-                call_user_func_array($paths[$path], $keyVal);
-            } else {
-                error404();
+            $values = array_values($values);
+            preg_match_all('/{([^}]*)}/', $path, $matches);
+            if (!empty($matches[1])) {
+                foreach ($matches[1] as $value) {
+                    if (string_between($value, "/", "/")) {
+                        $i = array_search($value, $matches[1]);
+                        if (preg_match($value, $values[$i])) {
+                            $keyVal[$paramNames[$i]] = $values[$i];
+                        } else {
+                            error404();
+                        }
+                    } else if (string_starts_with($value, ":")) {
+                        $i = array_search($value, $matches[1]);
+                        if ($value == ":num" && is_numeric($values[$i])) {
+                            $keyVal[$paramNames[$i]] = $values[$i];
+                        } else if ($value == ":alpha" && !is_numeric($values[$i])) {
+                            $keyVal[$paramNames[$i]] = $values[$i];
+                        } else if ($value == ":alpha_num" && preg_match('/^[a-zA-Z0-9]+$/', $values[$i])) {
+                            $keyVal[$paramNames[$i]] = $values[$i];
+                        } else {
+                            error404();
+                        }
+                    } else {
+                        $i = array_search($value, $matches[1]);
+                        $keyVal[$paramNames[$i]] = $values[$i];
+                    }
+                }
             }
+            foreach ($keyVal as $key => $value) {
+                if ($value) {
+                    call_user_func_array($paths[$path], $keyVal);
+                } else {
+                    error404();
+                }
+            }
+        } else {
+            error404();
         }
     } else {
-        echo "hello";
         error404();
     }
 }
@@ -105,6 +117,20 @@ function extractParameter($pattern)
     return null;
 }
 
+function checkEqualValues($array1, $array2)
+{
+    // Check if arrays have the same length
+    if (count($array1) !== count($array2)) {
+        return false;
+    }
+    // Iterate over the arrays and compare values at each index
+    for ($i = 0; $i < count($array1); $i++) {
+        if ($array1[$i] !== $array2[$i]) {
+            return false; // Values at index $i are not equal
+        }
+    }
+    return true; // All values are equal
+}
 
 
 
