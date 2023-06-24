@@ -34,25 +34,6 @@ function getHttpStatusHeader(int $statusCode): string
 }
 
 
-
-function error404()
-{
-    json(["message" => "404 Page not found"], 404);
-    exit;
-}
-
-function errors(bool $display = true)
-{
-    if ($display) {
-        ini_set('display_errors', 1);
-        error_reporting(E_ALL);
-    } else {
-        ini_set('display_errors', 0);
-        error_reporting(0);
-    }
-}
-
-
 function br(): string
 {
     return "<br>";
@@ -64,17 +45,23 @@ function pre(): string
 
 function get(string $param, bool $escape = true)
 {
-    if ($param != "uri") {
+    if ($param != "uri" && isset($_GET[$param])) {
         $data[$param] = $escape ? htmlspecialchars($_GET[$param]) : $_GET[$param];
         return $data;
+    } else {
+        return null;
     }
 }
 function post(string $param, bool $escape = true)
 {
-    $data[$param] = $escape ? htmlspecialchars($_POST[$param]) : $_POST[$param];
-    return $data;
+    if (isset($_GET[$param])) {
+        $data[$param] = $escape ? htmlspecialchars($_POST[$param]) : $_POST[$param];
+        return $data;
+    } else {
+        return null;
+    }
 }
-function all_request(bool $escape = true)
+function all_request(bool $escape = true): array
 {
     $req = [];
     foreach ($_REQUEST as $param => $request) {

@@ -1,4 +1,5 @@
 <?php
+
 require __DIR__ . "/vendor/autoload.php";
 require __DIR__ . "/helpers.php";
 
@@ -153,4 +154,24 @@ if (!function_exists('string_starts_with')) {
 
         return false;
     }
+}
+
+function errors(bool $display = true)
+{
+    if ($display) {
+        ini_set('display_errors', 1);
+        ini_set('display_startup_errors', 1);
+        error_reporting(E_ALL);
+    } else {
+        ini_set('display_errors', 0);
+        ini_set('display_startup_errors', 0);
+        error_reporting(0);
+    }
+}
+
+
+function error404()
+{
+    json(["message" => "404 Page not found"], 404);
+    exit;
 }

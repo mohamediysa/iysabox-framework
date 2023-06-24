@@ -1,6 +1,5 @@
 <?php
-
-errors(false);
+errors(); //set to false to disable errors
 
 ######################################################
 //                                                  //
@@ -16,7 +15,6 @@ route("/", function () {
         "message" => "Welcome to  iysabox"
     ]);
 });
-
 
 route("page", function () {
     $data = [
