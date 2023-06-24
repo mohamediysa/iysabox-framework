@@ -67,6 +67,24 @@ function run()
                             $keyVal[$paramNames[$i]] = $values[$i];
                         } else if ($value == ":alpha_num" && preg_match('/^[a-zA-Z0-9]+$/', $values[$i])) {
                             $keyVal[$paramNames[$i]] = $values[$i];
+                        } else if ($value == ":num_hyphen" && preg_match('/^[0-9-]+$/', $values[$i])) {
+                            $keyVal[$paramNames[$i]] = $values[$i];
+                        } else if ($value == ":alpha_hyphen" && preg_match('/^[a-zA-Z-]+$/', $values[$i])) {
+                            $keyVal[$paramNames[$i]] = $values[$i];
+                        } else if ($value == ":alpha_num_hyphen" && preg_match('/^[a-zA-Z0-9-]+$/', $values[$i])) {
+                            $keyVal[$paramNames[$i]] = $values[$i];
+                        } else if ($value == ":num_dash" && preg_match('/^[0-9_]+$/', $values[$i])) {
+                            $keyVal[$paramNames[$i]] = $values[$i];
+                        } else if ($value == ":alpha_dash" && preg_match('/^[a-zA-Z_]+$/', $values[$i])) {
+                            $keyVal[$paramNames[$i]] = $values[$i];
+                        } else if ($value == ":alpha_num_dash" && preg_match('/^[a-zA-Z0-9_]+$/', $values[$i])) {
+                            $keyVal[$paramNames[$i]] = $values[$i];
+                        } else if ($value == ":num_hyphen_dash" && preg_match('/^[0-9-_]+$/', $values[$i])) {
+                            $keyVal[$paramNames[$i]] = $values[$i];
+                        } else if ($value == ":alpha_hyphen_dash" && preg_match('/^[a-zA-Z-_]+$/', $values[$i])) {
+                            $keyVal[$paramNames[$i]] = $values[$i];
+                        } else if ($value == ":alpha_num_hyphen_dash" && preg_match('/^[a-zA-Z0-9-_]+$/', $values[$i])) {
+                            $keyVal[$paramNames[$i]] = $values[$i];
                         } else {
                             error404();
                         }
