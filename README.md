@@ -1,12 +1,12 @@
 # iysabox-framework
-a simple and lightweight php router/framework for building apis and small webpages<br>
+a simple and lightweight php framework for building apis<br>
 <pre>1. clone the files into your dir
     git clone https://github.com/mohamediysa/iysabox-framework.git</pre>
 <br>
 <pre>2. localhost/your-dir-name</pre>
 <br>
 <pre>
-3. open routes.php and add your routes <br>
+3. open app/routes.php and start adding your routes <br>
 route("path", callback)
 </pre>
 <br>
@@ -37,7 +37,7 @@ route("page/{id}", function ($id) {
     ];
     json($data, 200); //print data as a json with a status code
 });
-
+    
 <a>localhost/iysabox/page/1?q=query&name=iysa</a>
 <b>output:</b> 
 {
@@ -77,7 +77,22 @@ route("users/{:alpha_num}", function ($id) {
     json($data);
 });
 </pre>
+<pre>
+<b>more</b>
+{:num} ONLY NUMS
+{:alpha} ONLY ALPHABETS
+{:alpha_num} NUMS AND ALPHABETS
+{:num_hyphen} NUM WITH -
+{:alpha_hyphen} ALPHA WITH -
+{:alpha_num_hyphen} ALPHA & NUM WITH -
+{:num_dash} NUM WITH _
+{:alpha_dash} ALPHA WITH _
+{:alpha_num_dash} ALPHA NUM WITH _
+{:num_hyphen_dash} NUM WITH - AND _
+{:alpha_hyphen_dash} ALPHA WITH - AND _
+{:alpha_num_hyphen_dash} ALPHA NUM WITH - AND _
 
+</pre>
 <pre>
 <b>using regex, one param</b>
 route("page/{/^[0-9]+$/}", function ($id) {

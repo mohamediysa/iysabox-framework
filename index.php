@@ -6,10 +6,14 @@ $paths = [];
 
 require __DIR__ . "/app/routes.php";
 
-function route(string $path, callable $a)
+function route(string $path, callable $action)
 {
     global $paths;
-    $paths[$path] = $a;
+    if (str_starts_with($path, "/") && $path != "/") {
+        $paths[substr($path, 1)] = $action;
+    } else {
+        $paths[$path] = $action;
+    }
 }
 
 run();
@@ -54,7 +58,7 @@ function run()
                 foreach ($matches[1] as $value) {
                     if (string_between($value, "/", "/")) {
                         $i = array_search($value, $matches[1]);
-                        if (preg_match($value, $values[$i])) {
+                        if ($i != null && @preg_match($value, $values[$i])) {
                             $keyVal[$paramNames[$i]] = $values[$i];
                         } else {
                             error404();
