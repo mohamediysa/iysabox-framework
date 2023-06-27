@@ -38,7 +38,6 @@ function run()
             }
         }
         if (checkEqualValues($check_uri, $check_path)) {
-
             $reflectionFunc = new ReflectionFunction($paths[$path]);
             $parameters = $reflectionFunc->getParameters();
             $paramNames = [];
@@ -160,40 +159,6 @@ function checkEqualValues($array1, $array2)
 //                            //
 ################################
 
-function string_between($haystack, $delimiter1, $delimiter2)
-{
-    if (!empty($haystack) && !empty($delimiter1) && !empty($delimiter2)) {
-        if (strpos($haystack, $delimiter1) !== false && strpos($haystack, $delimiter2) !== false) {
-            // separate $haystack in two strings and put each string in an array
-            $pre_filter = explode($delimiter1, $haystack);
-            if (isset($pre_filter[1])) {
-                // remove everything after the $delimiter2 in the second line of the
-                // $pre_filter[] array
-                $post_filter = explode($delimiter2, $pre_filter[1]);
-                if (isset($post_filter[0])) {
-                    // return the string between $delimiter1 and $delimiter2
-                    return $post_filter[0];
-                }
-                return false;
-            }
-            return false;
-        }
-        return false;
-    }
-
-    return false;
-}
-
-function string_starts_with($haystack, $needles)
-{
-    foreach ((array) $needles as $needle) {
-        if ($needle != '' && mb_strpos($haystack, $needle) === 0) {
-            return true;
-        }
-    }
-
-    return false;
-}
 
 function error404()
 {
@@ -203,7 +168,6 @@ function error404()
 
 function json(array $data, int $status_code = 200): void
 {
-
     header(getHttpStatusHeader($status_code));
     header('Content-Type: application/json; charset=utf-8');
     echo json_encode($data);
@@ -215,15 +179,14 @@ function view(string $page_path, array $data = [])
     foreach ($data as $key => $value) {
         $$key = $value;
     }
-    require __DIR__ . "/app/html/" . $page_path . ".php";
+    require __DIR__ . "/app/html/" . $page_path;
 }
 
 
 function get(string $param, bool $escape = true)
 {
     if ($param != "uri" && isset($_GET[$param])) {
-        $data[$param] = $escape ? htmlspecialchars($_GET[$param]) : $_GET[$param];
-        return $data;
+        return $escape ? htmlspecialchars($_GET[$param]) : $_GET[$param];
     } else {
         return null;
     }
@@ -231,9 +194,8 @@ function get(string $param, bool $escape = true)
 
 function post(string $param, bool $escape = true)
 {
-    if (isset($_GET[$param])) {
-        $data[$param] = $escape ? htmlspecialchars($_POST[$param]) : $_POST[$param];
-        return $data;
+    if (isset($_POST[$param])) {
+        return $escape ? htmlspecialchars($_POST[$param]) : $_POST[$param];
     } else {
         return null;
     }
@@ -285,12 +247,40 @@ function getHttpStatusHeader(int $statusCode): string
             $statusHeader = 'HTTP/1.1 ' . $statusCode;
             break;
     }
-
     return $statusHeader;
 }
 
 //credit to https://github.com/hedii/helpers
 
+function string_between($haystack, $delimiter1, $delimiter2)
+{
+    if (!empty($haystack) && !empty($delimiter1) && !empty($delimiter2)) {
+        if (strpos($haystack, $delimiter1) !== false && strpos($haystack, $delimiter2) !== false) {
+            $pre_filter = explode($delimiter1, $haystack);
+            if (isset($pre_filter[1])) {
+                $post_filter = explode($delimiter2, $pre_filter[1]);
+                if (isset($post_filter[0])) {
+                    return $post_filter[0];
+                }
+                return false;
+            }
+            return false;
+        }
+        return false;
+    }
+    return false;
+}
+
+function string_starts_with($haystack, $needles)
+{
+    foreach ((array) $needles as $needle) {
+        if ($needle != '' && mb_strpos($haystack, $needle) === 0) {
+            return true;
+        }
+    }
+
+    return false;
+}
 
 function string_random($length = 32)
 {
@@ -314,10 +304,8 @@ function string_before(string $haystack, string $delimiter)
 {
     if (!empty($haystack) && !empty($delimiter)) {
         if (strpos($haystack, $delimiter) !== false) {
-            // separate $haystack in two strings and put each string in an array
             $filter = explode($delimiter, $haystack);
             if (isset($filter[0])) {
-                // return the string before $delimiter
                 return $filter[0];
             }
             return false;
@@ -332,22 +320,16 @@ function string_after($haystack, $delimiter)
 {
     if (!empty($haystack) && !empty($delimiter)) {
         if (strpos($haystack, $delimiter) !== false) {
-            // separate $haystack in two strings and put each string in an array
             $filter = explode($delimiter, $haystack);
             if (isset($filter[1])) {
-                // return the string after $delimiter
                 return $filter[1];
             }
             return false;
         }
         return false;
     }
-
     return false;
 }
-
-
-
 
 
 function string_ends_with($haystack, $needles)
@@ -357,7 +339,6 @@ function string_ends_with($haystack, $needles)
             return true;
         }
     }
-
     return false;
 }
 
@@ -373,14 +354,8 @@ function string_is($pattern, $value)
     if ($pattern == $value) {
         return true;
     }
-
     $pattern = preg_quote($pattern, '#');
-
-    // Asterisks are translated into zero-or-more regular expression wildcards
-    // to make it convenient to check if the strings starts with the given
-    // pattern such as "library/*", making any string check convenient.
     $pattern = str_replace('\*', '.*', $pattern);
-
     return (bool) preg_match('#^' . $pattern . '\z#u', $value);
 }
 
@@ -393,7 +368,6 @@ function string_contains($haystack, $needles)
             return true;
         }
     }
-
     return false;
 }
 
@@ -402,7 +376,6 @@ function string_contains($haystack, $needles)
 function string_finish($value, $cap)
 {
     $quoted = preg_quote($cap, '/');
-
     return preg_replace('/(?:' . $quoted . ')+$/u', '', $value) . $cap;
 }
 
